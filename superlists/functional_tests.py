@@ -5,7 +5,7 @@ import unittest
 class NewvisitorTest(unittest.TestCase):
     def setUp(self):
         self.browser = webdriver.Firefox()
-        self.browser.implicitly_wait(3)
+        self.browser.implicitly_wait(5)
     def tearDown(self):
         self.browser.quit()
 
@@ -32,21 +32,23 @@ class NewvisitorTest(unittest.TestCase):
         # 伊迪丝的爱好是使用假蝇做鱼饵钓鱼
         inputbox.send_keys('Buy peacock feathers')
         import time
-        time.sleep(2)
+        time.sleep(5)
         # 她按回车键后，页面更新了
         # 待办事项表格中显示了“1: Buy peacock feathers”
         inputbox.send_keys(Keys.ENTER)
         self.check_for_row_in_list_table('1: Buy peacock feathers')
-        time.sleep(2)
         table = self.browser.find_element_by_id('id_list_table')
+        time.sleep(5)
         rows = table.find_elements_by_tag_name('tr')
         self.assertIn('1: Buy peacock feathers',[row.text for row in rows])
         # 页面中又显示了一个文本框，可以输入其他的待办事项
         # 她输入了“Use peacock feathers to make a fly”（使用孔雀羽毛做假蝇）
         # 伊迪丝做事很有条理
         inputbox = self.browser.find_element_by_id('id_new_item')
+        time.sleep(5)
         inputbox.send_keys('Use peacock feathers to make a fly')
         inputbox.send_keys(Keys.ENTER)
+        time.sleep(5)
         table = self.browser.find_element_by_id('id_list_table')
         rows = table.find_elements_by_tag_name('tr')
         self.assertIn('1: Buy peacock feathers', [row.text for row in rows])
