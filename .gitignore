@@ -1,6 +1,6 @@
-"db.sqlite3" 
-"__pycache__" 
-"*.pyc" 
-"db.sqlite3" 
-"*.idea" 
-
+.idea/
+db.sqlite3
+functional_tests/__pycache__/
+geckodriver.log
+lists/__pycache__/
+superlists/__pycache__/
