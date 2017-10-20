@@ -9,6 +9,7 @@ class NewvisitorTest(LiveServerTestCase):
         self.browser = webdriver.Firefox()
         self.browser.implicitly_wait(5)
     def tearDown(self):
+        self.browser.refresh()
         self.browser.quit()
 
     def check_for_row_in_list_table(self,row_text):
@@ -36,7 +37,7 @@ class NewvisitorTest(LiveServerTestCase):
         # 她按回车键后，页面更新了
         # 待办事项表格中显示了“1: Buy peacock feathers”
         inputbox.send_keys(Keys.ENTER)
-        time.sleep(4)
+        time.sleep(0.5)
         edith_list_url = self.browser.current_url
         print(edith_list_url)
         self.assertRegex(edith_list_url,'lists/.+')
@@ -44,7 +45,7 @@ class NewvisitorTest(LiveServerTestCase):
         inputbox = self.browser.find_element_by_id('id_new_item')
         inputbox.send_keys('Use peacock feathers to make a fly')
         inputbox.send_keys(Keys.ENTER)
-        time.sleep(4)
+        time.sleep(0.5)
 
         # 页面再次更新，她的清单中显示了这两个待办事项
         self.check_for_row_in_list_table('2: Use peacock feathers to make a fly')
@@ -65,7 +66,7 @@ class NewvisitorTest(LiveServerTestCase):
         inputbox = self.browser.find_element_by_id('id_new_item')
         inputbox.send_keys('Buy milk')
         inputbox.send_keys(Keys.ENTER)
-        time.sleep(4)
+        time.sleep(0.5)
 
         # 弗朗西斯获得了他的唯一URL
         francis_list_url = self.browser.current_url
@@ -78,3 +79,16 @@ class NewvisitorTest(LiveServerTestCase):
         # 两人都很满意，去睡觉了
         self.fail('Finish the test!')
         # 她访问那个URL，发现待办事项清单还在
+
+    def test_lady_and_styling(self):
+        #伊迪丝访问首页
+        self.browser.get(self.live_server_url)
+        self.browser.set_window_size(1024,768)
+        #她看到输入框完美的居中显示
+        inputbox = self.browser.find_element_by_id('id_new_item')
+        self.assertAlmostEqual(inputbox.location['x']+inputbox.size['width']/2,512,delta=5)
+        # 她新建了一个清单，看到输入框仍完美地居中显示
+        inputbox.send_keys('testing\n')
+        time.sleep(0.5)
+        inputbox = self.browser.find_element_by_id('id_new_item')
+        self.assertAlmostEqual(inputbox.location['x']+inputbox.size['width']/2,512,delta=5)
