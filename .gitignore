@@ -4,4 +4,6 @@ functional_tests/__pycache__/
 geckodriver.log
 lists/__pycache__/
 superlists/__pycache__/
-lists/migrations/__pycache__/ 
+lists/migrations/__pycache__/
+lists/tests/__pycache__/
+
